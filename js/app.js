@@ -1,10 +1,10 @@
 console.log('yo');
 
 
-// var id = prompt('Enter Zip');
+var id = prompt('Enter Zip');
 var response = {};
 $.ajax({
-	url: 'http://api.openweathermap.org/data/2.5/weather?zip=60614,us&units=imperial&appid=052f26926ae9784c2d677ca7bc5dec98',
+	url: 'http://api.openweathermap.org/data/2.5/weather?zip=' + id + ',us&units=imperial&appid=052f26926ae9784c2d677ca7bc5dec98',
   	type: "GET",
   	dataType: 'json',
   	
@@ -36,14 +36,33 @@ $.ajax({
   	bigTemp.innerHTML = (temp + '&deg;');
   	main.appendChild(bigTemp);
   	main.appendChild(maxLow);
-  	
+  	var weatherImg = document.createElement('div');
+  	var background = document.createElement('img');
+  		if ( weatherMain === "clear sky"){
+  			background.setAttribute('src', 'http://openweathermap.org/img/w/01d.png');
+  	} else if(weatherMain === "few clouds"){
+  		background.setAttribute('src', 'http://openweathermap.org/img/w/02d.png');
+  	} else if(weatherMain === "snow"){
+  		background.setAttribute('src', 'http://openweathermap.org/img/w/10d.png');
+
+  	} else if(weatherMain === "overcast clouds" || "broken clouds"){
+  		background.setAttribute('src', 'http://openweathermap.org/img/w/04d.png');
+  		
+  	} else if(weatherMain === "rain"){
+  		background.setAttribute('src', 'http://openweathermap.org/img/w/10d.png');
+  		
+  	} else if(weatherMain === "thunderstorm"){
+  		background.setAttribute('src', 'http://openweathermap.org/img/w/11d.png');	
+  	} else if(weatherMain === "scattered clouds"){
+  		background.setAttribute('src', 'http://openweathermap.org/img/w/03d.png')
+  	}else {
+  		null;
+  	};	
+
+  	weatherImg.appendChild(background);
+  	main.appendChild(weatherImg);
   },
   
-
-
-
-
-
   fail: function(error){
 	console.log(error)
   }
